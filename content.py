@@ -1,16 +1,13 @@
-# All site content lives here. Edit this file, then run `python generate_site.py`
-# to rebuild index.html. No HTML editing required for text changes.
+
 
 NAME = "Scott Hodgins"
 TAGLINE = "Data Analyst & Data Scientist"
 
-# Set these to real strings when ready, e.g. "mailto:scott@example.com".
-# Leave any value as None to omit it from the generated page (it will render
-# as an HTML comment placeholder so it's easy to find later).
+
 CONTACT = {
-    "email": "mailto:scott.hodgins05@gmail.com",      # e.g. "mailto:scott.hodgins@example.com"
-    "linkedin": "https://www.linkedin.com/in/scott-hodgins/",   # e.g. "https://linkedin.com/in/scotthodgins"
-    "github": "https://github.com/ScottHodg",     # e.g. "https://github.com/scotthodgins"
+    "email": "mailto:scott.hodgins05@gmail.com",      
+    "linkedin": "https://www.linkedin.com/in/scott-hodgins/",   
+    "github": "https://github.com/ScottHodg",    
 }
 
 ABOUT = (
