@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ name }} \u2014 {{ tagline }}</title>
+<meta name="description" content="{{ tagline }} portfolio for {{ name }}.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,560;9..144,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<div class="wrap hero">
+  <h1>{{ name }}</h1>
+  <p class="tagline">{{ tagline }}</p>
+  <p class="intro">{{ about_short }}</p>
+  <div class="contact-row">
+{% if contact.email %}
+    <a href="{{ contact.email }}">Email</a>
+{% else %}
+    <!-- Add your email link here, e.g. <a href="mailto:you@example.com">Email</a> -->
+{% endif %}
+{% if contact.linkedin %}
+    <a href="{{ contact.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>
+{% else %}
+    <!-- Add your LinkedIn link here, e.g. <a href="https://linkedin.com/in/you">LinkedIn</a> -->
+{% endif %}
+{% if contact.github %}
+    <a href="{{ contact.github }}" target="_blank" rel="noopener">GitHub</a>
+{% else %}
+    <!-- Add your GitHub link here, e.g. <a href="https://github.com/you">GitHub</a> -->
+{% endif %}
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="section" id="about">
+    <div class="label">About</div>
+    <div class="content">
+      <p>{{ about }}</p>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="label">Experience</div>
+    <div class="content">
+{% for item in experience %}
+      <div class="timeline-item">
+        <div class="meta">{{ item.year }}</div>
+        <h3>{{ item.title }}</h3>
+{% if item.org %}
+        <div class="org">{{ item.org }}</div>
+{% endif %}
+        <p class="body">{{ item.body }}</p>
+      </div>
+{% endfor %}
+    </div>
+  </section>
+
+  <section class="section" id="project">
+    <div class="label">Project</div>
+    <div class="content">
+      <h3 style="font-family: var(--serif); font-size: 1.6rem; font-weight: 560; margin: 0 0 4px;">{{ project.title }}</h3>
+      <p class="project-subtitle">{{ project.subtitle }}</p>
+      <p>{{ project.framing }}</p>
+
+      <div class="stat-pair">
+        <div class="stat-block before">
+          <div class="stat-label">{{ project.stat_before_label }}</div>
+          <div class="stat-value">{{ project.stat_before_value }}</div>
+          <div class="stat-sub">{{ project.stat_before_sub }}</div>
+        </div>
+        <div class="stat-block after">
+          <div class="stat-label">{{ project.stat_after_label }}</div>
+          <div class="stat-value">{{ project.stat_after_value }}</div>
+          <div class="stat-sub">{{ project.stat_after_sub }}</div>
+        </div>
+      </div>
+
+      <p>{{ project.narrative }}</p>
+
+      <ul class="tool-list">
+{% for tool in project.tools %}
+        <li>{{ tool }}</li>
+{% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="label">Skills</div>
+    <div class="content">
+      <div class="skills-grid">
+{% for group in skills %}
+        <div class="group">
+          <h4>{{ group.group }}</h4>
+          <ul>
+{% for item in group['items'] %}
+            <li>{{ item }}</li>
+{% endfor %}
+          </ul>
+        </div>
+{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="label">Contact</div>
+    <div class="content contact-links">
+{% if contact.email %}
+      <a href="{{ contact.email }}">{{ contact.email_display or contact.email }}</a>
+{% else %}
+      <span class="contact-placeholder">&lt;!-- add email link --&gt;</span>
+{% endif %}
+{% if contact.linkedin %}
+      <a href="{{ contact.linkedin }}" target="_blank" rel="noopener">{{ contact.linkedin }}</a>
+{% else %}
+      <span class="contact-placeholder">&lt;!-- add LinkedIn link --&gt;</span>
+{% endif %}
+{% if contact.github %}
+      <a href="{{ contact.github }}" target="_blank" rel="noopener">{{ contact.github }}</a>
+{% else %}
+      <span class="contact-placeholder">&lt;!-- add GitHub link --&gt;</span>
+{% endif %}
+    </div>
+  </section>
+
+</div>
+
+<footer class="wrap">
+  {{ footer_note }}
+</footer>
+
+</body>
+</html>
