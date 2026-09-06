@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 """
-Generates index.html from templates/index.html.j2 using the content
-defined in content.py. Run this any time you edit content.py:
 
-    python generate_site.py
-
-GitHub Pages serves plain HTML/CSS/JS, so this script's only job is to
-turn your Python content into a static index.html file that Pages can host.
 """
 
 from jinja2 import Environment, FileSystemLoader
