@@ -30,7 +30,7 @@ def main():
         about=content.ABOUT,
         about_short=short_about(content.ABOUT),
         experience=content.EXPERIENCE,
-        project=content.PROJECT,
+        project={**content.PROJECT, "narrative_paragraphs": content.PROJECT["narrative"].split("\n\n")},
         skills=content.SKILLS,
         footer_note=content.FOOTER_NOTE,
     )

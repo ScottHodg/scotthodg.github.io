@@ -62,34 +62,60 @@ EXPERIENCE = [
 ]
 
 PROJECT = {
-    "title": "Real-Time Abandoned-Luggage Detection",
-    "subtitle": "Computer vision \u00b7 MBAI capstone \u00b7 Ontario Tech University",
+    "title": "Honest Validation of a Real-Time Abandoned-Luggage Detection System",
+    "subtitle": "Computer vision \u00b7 MBAI capstone (MBAI 5600G) \u00b7 Ontario Tech University \u00b7 Summer 2026",
     "framing": (
         "A transit-security system has to flag an unattended bag before it becomes a "
-        "problem, and it has to be right. I reproduced a published YOLOv8-based "
-        "abandoned-luggage detector, built out its tracking and dwell-time logic, and "
-        "then put its own evaluation under a microscope."
+        "problem, and it has to be right, or operators stop trusting it. I reproduced "
+        "a published YOLOv8s-based abandoned-luggage detector, paired it with ByteTrack "
+        "for tracking and a location-based ownership rule for the abandonment decision, "
+        "and then put the original paper's own evaluation under a microscope."
     ),
     "stat_before_label": "Originally reported",
     "stat_before_value": "0.937",
-    "stat_before_sub": "mAP, single train/test split",
-    "stat_after_label": "After my validation",
+    "stat_before_sub": "mAP@0.50, single train/test split",
+    "stat_after_label": "After group-aware cross-validation",
     "stat_after_value": "0.708",
-    "stat_after_sub": "mAP, group-aware cross-validation",
+    "stat_after_sub": "mAP@0.50 (bag-class AP alone fell 0.966 \u2192 0.651)",
     "narrative": (
-        "A three-level validation pipeline, single split, group-aware k-fold, and an "
-        "out-of-domain benchmark, exposed data leakage in the original evaluation. On "
-        "footage the model had never seen, event recall dropped to 0.50. Paired t-tests, "
-        "Wilcoxon, and Levene's tests confirmed the gap was real, not noise. Further "
-        "error analysis showed the out-of-domain failures came from object "
-        "unfamiliarity rather than genuine task difficulty. I tuned the detection and "
-        "tracking parameters with NSGA-II multi-objective optimization, then ran a "
-        "cost-benefit break-even analysis to answer the only question that actually "
-        "mattered: was this ready to deploy. It wasn't, not because of cost, but "
-        "because reliability wasn't there yet, and I said so."
+        "A three-level validation protocol, single split, group-aware 5-fold "
+        "cross-validation holding whole videos out, and an out-of-domain benchmark, "
+        "exposed frame-level data leakage in the original evaluation: the ABODA "
+        "training source contained frames from the same videos used for testing. "
+        "Once that leakage was controlled for, mAP fell from an inflated 0.937 to an "
+        "honest 0.708, a reduction confirmed statistically significant with one-sample "
+        "t-tests for every class (mAP: t=-6.35, p=0.0031; bag AP: t=-4.01, p=0.0160; "
+        "person AP: t=-7.22, p=0.0020). The bag class, the harder and rarer of the two, "
+        "took the biggest hit, falling from 0.966 to 0.651, while person AP fell more "
+        "modestly, evidence the model had partly memorized specific bags rather than "
+        "learning the general category."
+        "\n\n"
+        "On the unseen AVSS2007 benchmark, the complete system reached a 0.50 "
+        "abandonment-event recall (it caught one of two unseen abandonment events; a "
+        "small enough sample that the report treats this as suggestive rather than a "
+        "firm estimate, not a fully powered result). Error analysis traced the failure "
+        "to object unfamiliarity, not object size: a large, obvious suitcase, roughly "
+        "eight times the size at which in-domain recall was 0.955, was still missed, "
+        "because upright rolling suitcases were essentially absent from training. "
+        "Separately, robustness testing across 17 degradations in 7 families found "
+        "the model tolerant of lighting and compression changes but catastrophically "
+        "sensitive to sensor noise, an 88% performance loss, tracing directly to the "
+        "absence of noise augmentation during training."
+        "\n\n"
+        "I used NSGA-II multi-objective optimization (pymoo) to tune the ownership "
+        "rule's own parameters, detection radius, dwell time, and movement tolerance, "
+        "which the original paper had left as future work, and found a wide, stable "
+        "operating region rather than a fragile sweet spot. A break-even analysis "
+        "framed the economics concretely: at roughly CAD 1,267 per camera per year in "
+        "fixed cost, the system pays for itself even at the validated 0.50 recall if "
+        "it catches about one real abandonment event every two years per camera under "
+        "a conservative CAD 5,000-per-incident scenario. So cost was never the "
+        "obstacle. Reliability was. My recommendation was against full autonomous or "
+        "night-time deployment, but in favor of a restricted, human-supervised, "
+        "daytime rollout, an honest middle ground between 'it works' and 'scrap it.'"
     ),
     "tools": [
-        "YOLOv8 (Ultralytics)", "ByteTrack", "pymoo / NSGA-II", "SciPy",
+        "YOLOv8s (Ultralytics)", "ByteTrack", "pymoo / NSGA-II", "SciPy",
         "PyTorch", "OpenCV", "Streamlit",
     ],
 }

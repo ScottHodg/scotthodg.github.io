@@ -80,7 +80,9 @@
         </div>
       </div>
 
-      <p>{{ project.narrative }}</p>
+{% for para in project.narrative_paragraphs %}
+      <p>{{ para }}</p>
+{% endfor %}
 
       <ul class="tool-list">
 {% for tool in project.tools %}
